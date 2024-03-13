@@ -2,7 +2,7 @@
 Created a new NFL statistic based on passer rating for rushers
 
 rusher rating
-modeled after passer rating
+modeled after passer rating(look up wiki if not familiar)
 note: fumbles do not happen often enough for them to be their own category like interceptions are
 2.375 * 4 =~ 3.167 * 3 -> puts it on same scale as QBR 0-158.3
 
@@ -17,3 +17,6 @@ c: (RYOE / att + 1) * .905 - considers about a -1 RYOE per attempt to be zero an
 formula ((a+b+c)/6) x 100 = passer rating formula
 
 Rusher rating -> contracts
+
+I used a conda environment to support the src files, its basic with only an outside install of nfl_data_py
+https://pypi.org/project/nfl-data-py/
