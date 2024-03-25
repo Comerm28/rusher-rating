@@ -47,8 +47,8 @@ rusherbcstat_aggregated = rusherbcstat.groupby(['player_gsis_id', 'player_displa
 
 x = []
 y = []
-z = []
-s = []
+annotations = []
+yr = []
 
 for rb in rusherbcstat_aggregated.index:
     id = rusherbcstat_aggregated['player_gsis_id'][rb]
@@ -65,14 +65,14 @@ for rb in rusherbcstat_aggregated.index:
     
     x.append(rusher_rating(a(rusherastat['rushing_tds'][indA], rusherastat['rushing_fumbles_lost'][indA], rusherastat['games'][indA]), b(rusherbcstat_aggregated['avg_rush_yards'][rb]), c(rusherbcstat_aggregated['rush_yards_over_expected_per_att'][rb])))
     y.append(money['apy'][indM])
-    z.append(name)
-    s.append(rusherbcstat_aggregated['season'][rb])
+    annotations.append(name)
+    yr.append(rusherbcstat_aggregated['season'][rb])
 
 xy = pd.DataFrame({'x' : x, 'y' : y})
 
 plot.figure(figsize=(8, 6))
 plot.scatter(x, y, color='blue', alpha=0.5)
-plot.title('Is Paying a Running Back Worth it?')
+plot.title(f"Is Paying a Running Back Worth it?{years}")
 plot.xlabel('Average Rusher Rating')
 plot.ylabel('Salary (Millions)')
 plot.xlim(0, 158.3)
@@ -80,6 +80,12 @@ plot.ylim(0, 20)
 plot.grid(True)
 
 for i in xy.index:
-    plot.annotate(f"{z[i]}, {s[i]}", (xy['x'][i], xy['y'][i]), fontsize=6)
+    if(i % 2 == 0):
+        if(y[i] > 5 or x[i] > 80):
+            plot.annotate(f"{annotations[i]}, {yr[i]}", (x[i], y[i]), fontsize=6)
+    else:
+        if(y[i] > 5 or x[i] > 80):
+            plot.annotate(f"{annotations[i]}, {yr[i]}", (x[i], y[i] + .2), fontsize=6)
+    
 
 plot.show()
